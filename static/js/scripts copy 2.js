@@ -16,21 +16,21 @@ function initMap() {
 
 // Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
-//var locations = [
-//                 ['The Montreal Museum of Fine Arts', 45.498522, -73.5794],
-//                 ['Mount Royal Park', 45.504798, -73.587842],
- //                ['Ecole de technologie superiure ETS', 45.494546, -73.562246]
-//                 ];
+var locations = [
+                 ['The Montreal Museum of Fine Arts', 45.498522, -73.5794],
+                 ['Mount Royal Park', 45.504798, -73.587842],
+                 ['Ecole de technologie superiure ETS', 45.494546, -73.562246]
+                 ];
 
-var locations = ko.observableArray([
-                                    ['The Montreal Museum of Fine Arts', 45.498522, -73.5794],
-                                    ['Mount Royal Park', 45.504798, -73.587842],
-                                    ['Ecole de technologie superiure ETS', 45.494546, -73.562246]
-                                    ]);
+//var locations = ko.observableArray([
+//                                    ['The Montreal Museum of Fine Arts', 45.498522, -73.5794],
+//                                    ['Mount Royal Park', 45.504798, -73.587842],
+//                                    ['Ecole de technologie superiure ETS', 45.494546, -73.562246]
+//                                    ]);
 function setMarkers(map) {
     // Adds markers to the map.
     for (var i = 0; i < locations().length; i++) {
-        var position = locations()[i];
+        var position = locations[i];
         var marker = new google.maps.Marker({
                                             position: {lat: position[1], lng: position[2]},
                                             map: map,

@@ -2,6 +2,7 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -12,9 +13,9 @@
         </p>
         <div>
             <button data-bind="
-                click:showListings">Show Listings</button>
+                click:setMapOnAll(map)">Show Listings</button>
             <button data-bind="
-                click:hideMarkers(markers)">Hide Listings</button>
+                click:clearMarkers">Hide Listings</button>
              <hr>
              <span class="text"> Draw a shape to search for places in a very specific area!</span>
              <button data-bind="
@@ -23,11 +24,7 @@
          </div>
 
         <!--<div>
-          <button data-bind="
-                            click:showListings">Show Listings</button>
-          <button data-bind="
-                            click:hideMarkers(markers)">Hide Listings</button>
-          <hr>
+
           <span class="text"> Draw a shape to search for places in a very specific area!</span>
           <button data-bind="
               click:toggleDrawing(drawingManager)">Drawing Tools</button>
@@ -63,7 +60,8 @@
         "https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyC0yETbiVxEEaqblVWnkEiCibu2ieQSDwE&v=3&callback=initMap">
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>-->
+    <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>-->
     <script type="text/javascript" src="static/js/scripts.js"></script>
   </body>
 </html>

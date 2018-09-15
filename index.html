@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="static/css/styles.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="options-box">
+<div class="sidenav">
         <h1>
             <span><img src="static/img/canadaflag.png"></span>
             Discover Montreal
-            <span><img src="static/img/canadaflag.png"></span>
         </h1>
         <p>
           Discover good places to visit in Montreal, Quebec.
@@ -40,43 +39,18 @@
              <span class="text"> Draw a shape to search for places in a very specific area!</span>
              <button data-bind="
              click:">Drawing Tools</button>
-
+             <div id="selectDistance">
+                 <select data-bind="options: distances,
+                     optionsText: 'label'"></select>
+             </div>
+             <div id="selectMode">
+                 <select data-bind="options: modes,
+                     optionsText: 'mode'"></select>
+             </div>
          </div>
-
-        <!--<div>
-
-          <span class="text"> Draw a shape to search for places in a very specific area!</span>
-          <button data-bind="
-              click:toggleDrawing(drawingManager)">Drawing Tools</button>
-
         </div>
 
-         -->
-        <hr>
-            <div id="selectDistance">
-                <select data-bind="options: distances,
-                    optionsText: 'label'"></select>
-            </div>
-            <div id="selectMode">
-                <select data-bind="options: modes,
-                    optionsText: 'mode'"></select>
-                <button data-bind ="enable: chosenDistance,
-                    click: resetDistance">
-                    Reset distances
-                </button>
-            </div>
-<div>
-        <input data-bind="value: stringValue" />
-        <button data-bind ="enable: click: zoomArea">
-            Zoom
-        </button>
-</div>
-        </div>
-        <div>
-        </div>
-      </div>
-      <div id="map"></div>
-    </div>
+          <div id="map"class="main"></div>
     <script async defer
         src=
         "https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyC0yETbiVxEEaqblVWnkEiCibu2ieQSDwE&v=3&callback=initMap">

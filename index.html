@@ -21,6 +21,22 @@
             <button data-bind="
                 click:clearMarkers">Hide Listings</button>
              <hr>
+            <div id="visitList">
+                <table>
+                     <thead>
+                         <tr><th>Places to visit</th></tr>
+                     </thead>
+                     <tbody data-bind="foreach: list">
+                         <tr>
+                             <td>
+                                 <a data-bind="attr: { href: 'https://www.foursquare.com/' +$data[1] , title: $data[0] }"><span
+                                     data-bind="text: $data[0]"></span></a>
+                             </td>
+                         </tr>
+                     </tbody>
+                 </table>
+            </div>
+             <hr>
              <span class="text"> Draw a shape to search for places in a very specific area!</span>
              <button data-bind="
              click:">Drawing Tools</button>
@@ -34,10 +50,7 @@
               click:toggleDrawing(drawingManager)">Drawing Tools</button>
 
         </div>
-         <button data-bind ="enable: chosenDistance,
-         click: resetDistance">
-         Clear
-         </button>
+
          -->
         <hr>
             <div id="selectDistance">
@@ -47,14 +60,19 @@
             <div id="selectMode">
                 <select data-bind="options: modes,
                     optionsText: 'mode'"></select>
+                <button data-bind ="enable: chosenDistance,
+                    click: resetDistance">
+                    Reset distances
+                </button>
             </div>
-
+<div>
+        <input data-bind="value: stringValue" />
+        <button data-bind ="enable: click: zoomArea">
+            Zoom
+        </button>
+</div>
         </div>
         <div>
-            <input data-bind="value: stringValue" />
-            <button data-bind ="enable: click: zoomArea">
-                Zoom
-            </button>
         </div>
       </div>
       <div id="map"></div>

@@ -15,10 +15,7 @@ function initMap() {
     setMarkers(map);
 }
 
-// Data for the markers consisting of a name, a LatLng and a zIndex for the
-// order in which these markers should display on top of each other.
-
-
+// Sets the data for the pre-selected markers consisting of name, latitude and longitude
 var locations = ko.observableArray([
                                     ['The Montreal Museum of Fine Arts', 45.498522, -73.5794],
                                     ['Mount Royal Park', 45.504798, -73.587842],
@@ -31,6 +28,17 @@ var locations = ko.observableArray([
                                     ['St. Josephs Oratory', 45.492574, -73.618339],
                                     ['Place-dArmes', 45.505775, -73.559904]
                                     ]);
+
+
+var SimpleListModel = function(list) {
+    this.list = ko.observableArray(list);
+};
+
+// Define the variables to label the markers
+var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var labelIndex = 0;
+
+// Create the markers with labels from A to Z
 function setMarkers(map) {
     // Adds markers to the map.
     for (var i = 0; i < locations().length; i++) {
@@ -38,6 +46,7 @@ function setMarkers(map) {
         var marker = new google.maps.Marker({
                                             position: {lat: position[1], lng: position[2]},
                                             map: map,
+                                            label: labels[labelIndex++ % labels.length],
                                             title: position[0]
                                             });
         markers.push(marker);
@@ -87,3 +96,8 @@ var ModeVM = function TravelModesViewModel() {
 //The bindings are applied directly to the elements
 ko.applyBindings(DistanceVM, document.getElementById('selectDistance'));
 ko.applyBindings(ModeVM, document.getElementById('selectMode'));
+//ko.applyBindings(ModeVM, document.getElementById('visitList'));
+
+
+ko.applyBindings(new SimpleListModel(locations()),
+                 document.getElementById('visitList'));

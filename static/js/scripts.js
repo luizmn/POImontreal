@@ -3,11 +3,12 @@
 // The markers are stored in an array.
 // The user can then click an option to hide, show or delete the markers.
 var map;
-var markers = [];
+//var markers = [];
+var markers = ko.observableArray();
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-                              zoom: 12,
+                              zoom: 11,
                               center: {lat: 45.5016889, lng: -73.567256}
                               });
 
@@ -16,16 +17,19 @@ function initMap() {
 
 // Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
-//var locations = [
-//                 ['The Montreal Museum of Fine Arts', 45.498522, -73.5794],
-//                 ['Mount Royal Park', 45.504798, -73.587842],
- //                ['Ecole de technologie superiure ETS', 45.494546, -73.562246]
-//                 ];
+
 
 var locations = ko.observableArray([
                                     ['The Montreal Museum of Fine Arts', 45.498522, -73.5794],
                                     ['Mount Royal Park', 45.504798, -73.587842],
-                                    ['Ecole de technologie superiure ETS', 45.494546, -73.562246]
+                                    ['Ecole de technologie superiure ETS', 45.494546, -73.562246],
+                                    ['Notre-Dame Basilica of Montreal', 45.504542, -73.556128],
+                                    ['Old Montreal', 45.507453, -73.554418],
+                                    ['Montreal Botanical Garden', 45.560002, -73.563009],
+                                    ['Montreal Biodome', 45.559737, -73.549862],
+                                    ['Belvédère Camillien-Houde', 45.510798, -73.592949],
+                                    ['St. Josephs Oratory', 45.492574, -73.618339],
+                                    ['Place-dArmes', 45.505775, -73.559904]
                                     ]);
 function setMarkers(map) {
     // Adds markers to the map.
@@ -42,8 +46,8 @@ function setMarkers(map) {
 
 // Sets the map on all markers in the array.
 function setMapOnAll(map) {
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
+    for (var i = 0; i < markers().length; i++) {
+        markers()[i].setMap(map);
     }
 }
 

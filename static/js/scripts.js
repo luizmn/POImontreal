@@ -3,7 +3,6 @@
 // The markers are stored in an array.
 // The user can then click an option to hide, show or delete the markers.
 var map;
-//var markers = [];
 var markers = ko.observableArray();
 
 function initMap() {
@@ -60,6 +59,10 @@ function setMapOnAll(map) {
     }
 }
 
+var setMapOnAll = function(map) {
+    this.list = ko.observableArray(list);
+};
+
 // Removes the markers from the map, but keeps them in the array.
 function clearMarkers() {
     setMapOnAll(null);
@@ -96,8 +99,5 @@ var ModeVM = function TravelModesViewModel() {
 //The bindings are applied directly to the elements
 ko.applyBindings(DistanceVM, document.getElementById('selectDistance'));
 ko.applyBindings(ModeVM, document.getElementById('selectMode'));
-//ko.applyBindings(ModeVM, document.getElementById('visitList'));
-
-
 ko.applyBindings(new SimpleListModel(locations()),
                  document.getElementById('visitList'));

@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html>
-  <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="static/css/styles.css">
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-  </head>
-  <body>
-<div class="sidenav">
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+        </script>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+
+    </head>
+    <body>
+        <!-- Sidebar  -->
+        <div class="sidenav">
         <h1>
             <span><img src="static/img/canadaflag.png"></span>
             Discover Montreal
@@ -19,17 +27,18 @@
                 click:setMapOnAll(map)">Show Listings</button>
             <button data-bind="
                 click:clearMarkers">Hide Listings</button>
-             <hr>
+              <hr>
             <div id="visitList">
                 <table>
                      <thead>
                          <tr><th>Places to visit</th></tr>
                      </thead>
-                     <tbody data-bind="foreach: list">
+                     <tbody data-bind="foreach: locations()">
                          <tr>
                              <td>
-                                 <a data-bind="attr: { href: 'https://www.foursquare.com/' +$data[1] , title: $data[0] }"><span
-                                     data-bind="text: $data[0]"></span></a>
+                                 <a data-bind="attr: { href: 'https://www.foursquare.com/' +latitude , title: title }">
+                                     <span data-bind="text: title"></span>
+                                 </a>
                              </td>
                          </tr>
                      </tbody>
@@ -39,7 +48,7 @@
              <span class="text"> Draw a shape to search for places in a very specific area!</span>
              <button data-bind="
              click:">Drawing Tools</button>
-             <div id="selectDistance">
+                     <div id="selectDistance">
                  <select data-bind="options: distances,
                      optionsText: 'label'"></select>
              </div>
@@ -47,17 +56,18 @@
                  <select data-bind="options: modes,
                      optionsText: 'mode'"></select>
              </div>
+
          </div>
         </div>
+        <div id="map" data-bind="googlemap: { locations: locations, centerLat: 16.5, centerLon: 80.6 }">
+        </div>
 
-          <div id="map"class="main"></div>
+       <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+       <script type="text/javascript" src="static/js/scripts.js"></script>
     <script async defer
         src=
-        "https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyC0yETbiVxEEaqblVWnkEiCibu2ieQSDwE&v=3&callback=initMap">
+        "https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyC0yETbiVxEEaqblVWnkEiCibu2ieQSDwE&v=3&callback=startMap">
     </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-    <!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>-->
-    <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>-->
-    <script type="text/javascript" src="static/js/scripts.js"></script>
   </body>
 </html>

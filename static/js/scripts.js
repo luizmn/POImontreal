@@ -90,8 +90,8 @@ var ModeVM = function TravelModesViewModel() {
 };
 
 //The bindings are applied directly to the elements
-ko.applyBindings(DistanceVM, document.getElementById('selectDistance'));
-ko.applyBindings(ModeVM, document.getElementById('selectMode'));
+//ko.applyBindings(DistanceVM, document.getElementById('selectDistance'));
+//ko.applyBindings(ModeVM, document.getElementById('selectMode'));
 //ko.applyBindings(ModeVM, document.getElementById('visitList'));
 
 

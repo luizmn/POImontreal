@@ -1,3 +1,12 @@
+// Functions used in the sidebar
+function sidebar_open() {
+    document.getElementById("placesSidebar").style.display = "block";
+}
+function sidebar_close() {
+    document.getElementById("placesSidebar").style.display = "none";
+}
+
+// Creates the variables for store the map and pre-selected markers
 var map;
 var markers = ko.observableArray();
 
@@ -5,7 +14,15 @@ var markers = ko.observableArray();
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
                               zoom: 11,
-                              center: {lat: 45.5016889, lng: -73.567256}
+                              center: {lat: 45.5016889, lng: -73.567256},
+                              // Position map controls in the top center of the map
+                              mapTypeControl: true,
+                              mapTypeControlOptions: {
+                              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                              position: google.maps.ControlPosition.TOP_CENTER
+                              },
+                              scaleControl: true,
+                              fullscreenControl: true
                               });
 
     setMarkers(map);

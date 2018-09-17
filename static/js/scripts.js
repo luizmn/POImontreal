@@ -157,6 +157,17 @@ ko.applyBindings(ModeVM, document.getElementById('selectMode'));
 ko.applyBindings(new SimpleListModel(locations()),
                  document.getElementById('visitList'));
 
+$(document).ready(function () {
+                  $("#sidebar").mCustomScrollbar({
+                                                 theme: "minimal"
+                                                 });
+
+                  $('#sidebarCollapse').on('click', function () {
+                                           $('#sidebar, #content').toggleClass('active');
+                                           $('.collapse.in').toggleClass('in');
+                                           $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                                           });
+                  });
 
 function startMap() {
     ko.applyBindings(vm, document.getElementById('map'));

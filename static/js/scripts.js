@@ -1,23 +1,33 @@
 var map;
 var markers = ko.observableArray();
 
-ko.bindingHandlers.googlemap = {
-init: function(element, valueAccessor) {
+// Creates the map and set a center position
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+                              zoom: 11,
+                              center: {lat: 45.5016889, lng: -73.567256}
+                              });
 
-    var
-    value = valueAccessor(),
-    mapOptions = {
-    zoom: 11,
-    center: {
-    lat: 45.5016889,
-    lng: -73.567256
-    },
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-    },
-    map = new google.maps.Map(element, mapOptions);
     setMarkers(map);
-
 }
+
+// Sets the data for the pre-selected markers consisting of name, latitude and longitude
+var locations = ko.observableArray([
+                                    ['The Montreal Museum of Fine Arts', 45.498522, -73.5794],
+                                    ['Mount Royal Park', 45.504798, -73.587842],
+                                    ['Ecole de technologie superiure ETS', 45.494546, -73.562246],
+                                    ['Notre-Dame Basilica of Montreal', 45.504542, -73.556128],
+                                    ['Old Montreal', 45.507453, -73.554418],
+                                    ['Montreal Botanical Garden', 45.560002, -73.563009],
+                                    ['Montreal Biodome', 45.559737, -73.549862],
+                                    ['Belvédère Camillien-Houde', 45.510798, -73.592949],
+                                    ['St. Josephs Oratory', 45.492574, -73.618339],
+                                    ['Place-dArmes', 45.505775, -73.559904]
+                                    ]);
+
+
+var SimpleListModel = function(list) {
+    this.list = ko.observableArray(list);
 };
 
 // Define the variables to label the markers
@@ -27,91 +37,24 @@ var labelIndex = 0;
 // Create the markers with labels from A to Z
 function setMarkers(map) {
     // Adds markers to the map.
-
-    for (var l in locations()) {
-        var latLng = new google.maps.LatLng(
-                                            locations()[l].latitude,
-                                            locations()[l].longitude);
+    for (var i = 0; i < locations().length; i++) {
+        var position = locations()[i];
         var marker = new google.maps.Marker({
-                                            position: latLng,
+                                            position: {lat: position[1], lng: position[2]},
                                             map: map,
                                             label: labels[labelIndex++ % labels.length],
-                                            title: locations()[l].title
+                                            title: position[0]
                                             });
         markers.push(marker);
     }
 }
 
-var locations = ko.observableArray([{
-                                    title: "The Montreal Museum of Fine Arts",
-                                    latitude: 45.498522,
-                                    longitude: -73.5794
-                                    },
-                                    {
-                                    title: "Mount Royal Park",
-                                    latitude: 45.504798,
-                                    longitude: -73.587842
-                                    },
-                                    {
-                                    title: "Ecole de technologie superiure ETS",
-                                    latitude: 45.494546,
-                                    longitude: -73.562246
-                                    },
-                                    {
-                                    title: "Notre-Dame Basilica of Montreal",
-                                    latitude: 45.504542,
-                                    longitude: -73.556128
-                                    },
-                                    {
-                                    title: "Old Montreal",
-                                    latitude: 45.507453,
-                                    longitude: -73.554418
-                                    },
-                                    {
-                                    title: "Montreal Botanical Garden",
-                                    latitude: 45.560002,
-                                    longitude: -73.563009
-                                    },
-                                    {
-                                    title: "Montreal Biodome",
-                                    latitude: 45.559737,
-                                    longitude: -73.549862
-                                    },
-                                    {
-                                    title: "Belvédère Camillien-Houde",
-                                    latitude: 45.510798,
-                                    longitude: -73.592949
-                                    },
-                                    {
-                                    title: "St. Joseph's Oratory",
-                                    latitude: 45.492574,
-                                    longitude: -73.618339
-                                    },
-                                    {
-                                    title: "Place-d'Armes",
-                                    latitude: 45.505775,
-                                    longitude: -73.559904
-                                    }
-                                    ]);
-var vm = {
-    locations
-};
-
-
-var SimpleListModel = function(list) {
-    this.list = ko.observableArray(list);
-};
-
 // Sets the map on all markers in the array.
-/*function setMapOnAll(map) {
+function setMapOnAll(map) {
     for (var i = 0; i < markers().length; i++) {
         markers()[i].setMap(map);
     }
 }
-
-var setMapOnAll = function(map) {
-    this.list = ko.observableArray(locations);
-};
 
 // Removes the markers from the map, but keeps them in the array.
 function clearMarkers() {
@@ -122,7 +65,7 @@ function clearMarkers() {
 function showMarkers() {
     setMapOnAll(markers);
 }
-*/
+
 //Function used to show distances
 var DistanceVM = function DistancesViewModel() {
     this.distances = [
@@ -136,7 +79,6 @@ var DistanceVM = function DistancesViewModel() {
 };
 
 //Function used to show travel modes
-
 var ModeVM = function TravelModesViewModel() {
     this.modes = [
                   { mode: "Drive", value: "DRIVING"},
@@ -147,29 +89,11 @@ var ModeVM = function TravelModesViewModel() {
     this.chosenMode = ko.observable();
 };
 
-
 //The bindings are applied directly to the elements
-ko.applyBindings(DistanceVM,document.getElementById('selectDistance'));
+ko.applyBindings(DistanceVM, document.getElementById('selectDistance'));
 ko.applyBindings(ModeVM, document.getElementById('selectMode'));
-/*ko.applyBindings(vm, document.getElementById('map'));
-*/
+//ko.applyBindings(ModeVM, document.getElementById('visitList'));
+
 
 ko.applyBindings(new SimpleListModel(locations()),
                  document.getElementById('visitList'));
-
-$(document).ready(function () {
-                  $("#sidebar").mCustomScrollbar({
-                                                 theme: "minimal"
-                                                 });
-
-                  $('#sidebarCollapse').on('click', function () {
-                                           $('#sidebar, #content').toggleClass('active');
-                                           $('.collapse.in').toggleClass('in');
-                                           $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                                           });
-                  });
-
-function startMap() {
-    ko.applyBindings(vm, document.getElementById('map'));
-}
-

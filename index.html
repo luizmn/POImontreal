@@ -1,82 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
-        </script>
-        <!-- Custom CSS -->
-        <link rel="stylesheet" type="text/css" href="static/css/styles.css">
-
-    </head>
+            <link rel="stylesheet" type="text/css" href="static/css/styles.css">
+                <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+                </head>
     <body>
-        <!-- Sidebar  -->
         <div class="sidenav">
-        <h1>
-            <span><img src="static/img/canadaflag.png"></span>
-            Discover Montreal
-        </h1>
-        <p>
-          Discover good places to visit in Montreal, Quebec.
-        </p>
-        <div>
-            <button data-bind="
-                click:setMapOnAll(map)">Show markers</button>
-            <button data-bind="
-                click:clearMarkers">Hide markers</button>
-              <hr>
-            <div id="visitList">
-                <table>
-                     <thead>
-                         <tr><th>Places to visit</th></tr>
-                     </thead>
-                     <tbody data-bind="foreach: locations()">
-                         <tr>
-                             <td>
-                                 <a data-bind="attr: { href: 'https://www.foursquare.com/' +latitude , title: title }">
-                                     <span data-bind="text: title"></span>
-                                 </a>
-                             </td>
-                         </tr>
-                     </tbody>
-                 </table>
+            <h1>
+                <span><img src="static/img/canadaflag.png"></span>
+                Discover Montreal
+            </h1>
+            <p>
+            Discover good places to visit in Montreal, Quebec.
+            </p>
+            <div>
+                <hr>
+                <div id="visitList">
+                    <table>
+                        <thead>
+                            <tr><th>Places to visit</th></tr>
+                        </thead>
+                        <tbody data-bind="foreach: list">
+                            <tr>
+                                <td>
+                                    <a data-bind="attr: { href: 'https://www.foursquare.com/' +$data[1] , title: $data[0] }"><span
+                                        data-bind="text: $data[0]"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <span class="text"> Draw a shape to search for places in a very specific area!</span>
+                <button data-bind="
+                    click:">Drawing Tools</button>
+                <div id="selectDistance">
+                    <select data-bind="options: distances,
+                        optionsText: 'label'"></select>
+                </div>
+                <div id="selectMode">
+                    <select data-bind="options: modes,
+                        optionsText: 'mode'"></select>
+                </div>
             </div>
-             <hr>
-             <span class="text"> Draw a shape to search for places in a very specific area!</span>
-             <button data-bind="
-             click:">Drawing Tools</button>
-                     <div id="selectDistance">
-                 <select data-bind="options: distances,
-                     optionsText: 'label'"></select>
-             </div>
-             <div id="selectMode">
-                 <select data-bind="options: modes,
-                     optionsText: 'mode'"></select>
-             </div>
-
-         </div>
-        </div>
-        <div id="map" data-bind="googlemap: { locations: locations, centerLat: 16.5, centerLon: 80.6 }">
         </div>
 
-       <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-       <script type="text/javascript" src="static/js/scripts.js"></script>
-       <!-- jQuery CDN  -->
-       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-       <!-- Popper.JS -->
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-       <!-- Bootstrap JS -->
-       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-       <!-- jQuery Custom Scroller CDN -->
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-    <script async defer
-        src=
-        "https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyC0yETbiVxEEaqblVWnkEiCibu2ieQSDwE&v=3&callback=startMap">
-    </script>
-  </body>
+        <div id="map"class="main"></div>
+        <script async defer
+            src=
+            "https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyC0yETbiVxEEaqblVWnkEiCibu2ieQSDwE&v=3&callback=initMap">
+            </script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+        <!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>-->
+        <!--<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>-->
+        <script type="text/javascript" src="static/js/scripts.js"></script>
+    </body>
 </html>

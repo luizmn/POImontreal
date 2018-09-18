@@ -26,6 +26,8 @@ function initMap() {
                               });
 
     setMarkers(map);
+
+
 }
 
 // Sets the data for the pre-selected markers consisting of name, latitude and longitude
@@ -60,10 +62,28 @@ function setMarkers(map) {
                                             position: {lat: position[1], lng: position[2]},
                                             map: map,
                                             label: labels[labelIndex++ % labels.length],
+                                            animation: google.maps.Animation.DROP,
                                             title: position[0]
                                             });
         markers.push(marker);
+
+    
+    
+        marker.addListener('click', toggleBounce);
+
     }
+    marker.addListener('click', toggleBounce);
+
+    function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function () { marker.setAnimation(null); }, 750);
+            //markers()[i].setMap(map);
+        }
+    }
+
 }
 
 // Sets the map on all markers in the array.

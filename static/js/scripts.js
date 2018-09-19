@@ -67,20 +67,29 @@ function setMarkers(map) {
                                             });
         markers.push(marker);
 
-    
-    
-        marker.addListener('click', toggleBounce);
+       
+        //Get the position of clicked marker
+        marker.addListener('click', function () {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setAnimation(null);
+            }
+            toggleBounce(this);
+            map.setZoom(12);
+            map.setCenter(markers.getPosition());
+        });
 
     }
-    marker.addListener('click', toggleBounce);
 
-    function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
+    // Animate clicked marker
+    function toggleBounce(poi) {
+        if (poi.getAnimation() !== null) {
+            poi.setAnimation(null);
         } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-            setTimeout(function () { marker.setAnimation(null); }, 750);
-            //markers()[i].setMap(map);
+            poi.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function () {
+                poi.setAnimation(null);
+            }, 1400); //This value sets the duration of animation
+
         }
     }
 

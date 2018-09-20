@@ -15,7 +15,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
                               zoom: 11,
                               center: {lat: 45.5016889, lng: -73.567256},
-                              // Position map controls in the top center of the map
+                              // Position map controls in the top center
                               mapTypeControl: true,
                               mapTypeControlOptions: {
                               style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -24,10 +24,7 @@ function initMap() {
                               scaleControl: true,
                               fullscreenControl: true
                               });
-
     setMarkers(map);
-
-
 }
 
 // Sets the data for the pre-selected markers consisting of name, latitude and longitude
@@ -44,7 +41,7 @@ var locations = ko.observableArray([
                                     ['Place-dArmes', 45.505775, -73.559904]
                                     ]);
 
-
+// Creates a list with the content
 var SimpleListModel = function(list) {
     this.list = ko.observableArray(list);
 };
@@ -52,10 +49,18 @@ var SimpleListModel = function(list) {
 // Define the variables to label the markers
 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
+var infowindow;
 
 // Create the markers with labels from A to Z
 function setMarkers(map) {
     // Adds markers to the map.
+    infowindow = new google.maps.InfoWindow();
+    /*             
+    infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+    */    
+
     for (var i = 0; i < locations().length; i++) {
         var position = locations()[i];
         var marker = new google.maps.Marker({
@@ -63,9 +68,39 @@ function setMarkers(map) {
                                             map: map,
                                             label: labels[labelIndex++ % labels.length],
                                             animation: google.maps.Animation.DROP,
-                                            title: position[0]
-                                            });
-        markers.push(marker);
+                                            title: position[0]//,
+                                        //setVisible(true);
+        });
+
+        
+        /*var contentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading">' +
+            marker.title +
+            '</h1>' +
+            '<div id="bodyContent">' +
+            '<p>' +
+            '</p>' +
+            '</div>' +
+            '</div>';
+            */
+
+        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            return function () {
+                infowindow.setContent("<div id='firstHeading'>" + marker.title + "</div>" +
+                "<div id='siteNotice'>" +
+                    "</div>" +
+                    "<h1 id='firstHeading' class='firstHeading'>" +
+                    locations()[i][0] +
+                    "</h1>"    );
+                //infowindow.setContent(marker.title);
+                infowindow.setOptions({ maxWidth: 300 });
+                infowindow.open(map, marker);
+            }
+        })(marker, i));
+
+        markers.push(marker, infowindow);
 
        
         //Get the position of clicked marker
@@ -75,9 +110,12 @@ function setMarkers(map) {
             }
             toggleBounce(this);
             map.setZoom(12);
-            map.setCenter(markers.getPosition());
+            map.setCenter(marker.lat, marker.lng);
+            infowindow.open(map, marker.lat, marker.lng);
+
         });
 
+       
     }
 
     // Animate clicked marker
@@ -94,6 +132,30 @@ function setMarkers(map) {
     }
 
 }
+
+/*
+// Filtering the places list
+filterList = ko.observable("");
+
+this.filteredList = ko.dependentObservable(function () {
+    var q = this.filterList().toUpperCase();
+    if (!q) {
+        return ko.utils.arrayFilter(self.locations(), function (item) {
+            item.marker.setVisible(true);
+            return true;
+        });
+    } else {
+        return ko.utils.arrayFilter(this.locations(), function (item) {
+            if (item.name.toUpperCase().indexOf(q) >= 0) {
+                return true;
+            } else {
+                item.marker.setVisible(false);
+                return false;
+            }
+        });
+    }
+}, this);
+*/
 
 // Sets the map on all markers in the array.
 function setMapOnAll(map) {
@@ -134,6 +196,8 @@ var ModeVM = function TravelModesViewModel() {
                   ];
     this.chosenMode = ko.observable();
 };
+
+
 
 //The bindings are applied directly to the elements
 //ko.applyBindings(DistanceVM, document.getElementById('selectDistance'));

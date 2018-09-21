@@ -29,16 +29,17 @@ function initMap() {
 
 // Sets the data for the pre-selected markers consisting of name, latitude and longitude
 var locations = ko.observableArray([
-                                    ['The Montreal Museum of Fine Arts', 45.498522, -73.5794],
-                                    ['Mount Royal Park', 45.504798, -73.587842],
-                                    ['Ecole de technologie superiure ETS', 45.494546, -73.562246],
-                                    ['Notre-Dame Basilica of Montreal', 45.504542, -73.556128],
-                                    ['Old Montreal', 45.507453, -73.554418],
-                                    ['Montreal Botanical Garden', 45.560002, -73.563009],
-                                    ['Montreal Biodome', 45.559737, -73.549862],
-                                    ['Belvédère Camillien-Houde', 45.510798, -73.592949],
-                                    ['St. Josephs Oratory', 45.492574, -73.618339],
-                                    ['Place-dArmes', 45.505775, -73.559904]
+                                    // ['name', latitude, longitude, foursquare_venue_id]
+                                    ['The Montreal Museum of Fine Arts', 45.498522, -73.5794, '4e356969b61cddd1cd3cbba3'],
+                                    ['Mount Royal Park', 45.504798, -73.587842, '4ad8f749f964a520871621e3'],
+                                    ['Mary Queen of the World Cathedral', 45.49921, -73.568231, '4b201c13f964a520532d24e3'],
+                                    ['Notre-Dame Basilica of Montreal', 45.504542, -73.556128, '4b0d9f4ef964a5207a4c23e3'],
+                                    ['Old Port of Montreal', 45.512458, -73.548487, '4b6a38f5f964a520d8cd2be3'],
+                                    ['Montreal Botanical Garden', 45.560002, -73.563009, '4ad4c06bf964a520acf920e3'],
+                                    ['Montreal Biodome', 45.559737, -73.549862, '4ad4c06bf964a520abf920e3'],
+                                    ['Belvédère Camillien-Houde', 45.510798, -73.592949, '4c0a7563340720a1bf678693'],
+                                    ['St. Josephs Oratory', 45.492574, -73.618339, '4ad4c06cf964a520e7f920e3'],
+                                    ['Place-d`Armes', 45.505775, -73.559904, '4d49a48c11a36ea8d8082a1c']
                                     ]);
 
 // Creates a list with the content
@@ -92,7 +93,7 @@ function setMarkers(map) {
                 "<div id='siteNotice'>" +
                     "</div>" +
                     "<h1 id='firstHeading' class='firstHeading'>" +
-                    locations()[i][0] +
+                    locations()[i][3] +
                     "</h1>"    );
                 //infowindow.setContent(marker.title);
                 infowindow.setOptions({ maxWidth: 300 });
@@ -133,6 +134,62 @@ function setMarkers(map) {
 
 }
 
+/*
+var parse = function (categories) {
+    categories.forEach(function (category) {
+        if (category.categories && category.categories.length) {
+            console.group(category.name);
+            parse(category.categories);
+            console.groupEnd(category.name);
+        } else {
+            console.log(category.name);
+        }
+    });
+};
+$.getJSON('https://api.foursquare.com/v2/venues/categories?oauth_token=GXAGYHX5KE3JEPUGVPNDWTBZJ4DCUCYBCSTVZGSYIDUED1TU&v=20130713&callback=?', function (data) {
+    parse(data.response.categories);
+});
+
+*/
+
+
+var DistanceVM = function DistancesViewModel() {
+    this.distances = [
+        { label: "10 min", time: 10 },
+        { label: "15 min", time: 15 },
+        { label: "30 min", time: 30 },
+        { label: "1 hr", time: 60 }
+    ];
+    this.chosenDistance = ko.observable();
+};
+
+//var FsPlacesInfo = function SearchFoursquare() {
+    //this.info = 
+
+//}
+
+$.getJSON('https://api.foursquare.com/v2/venues/categories?oauth_token=GXAGYHX5KE3JEPUGVPNDWTBZJ4DCUCYBCSTVZGSYIDUED1TU&v=20130713&callback=?',
+    function (data) {
+        console.log(data);
+//        $.each(data.response.venues, function (i, venues) {
+        $.each(data.response.categories, function (i, categories) {
+            text = '<p>Name: ' + categories.name +
+                '</p>';
+            //$(content).appendTo("#categories");
+            $(".mypanel").html(text);
+        });
+    });
+/*
+$.getJSON('http://time.jsontest.com', function (data) {
+
+    var text = `Date: ${data.date}<br>
+                    Time: ${data.time}<br>
+                    Unix time: ${data.milliseconds_since_epoch}`
+
+
+    $(".mypanel").html(text);
+});
+*/
 /*
 // Filtering the places list
 filterList = ko.observable("");
@@ -200,6 +257,7 @@ var ModeVM = function TravelModesViewModel() {
 
 
 //The bindings are applied directly to the elements
+
 //ko.applyBindings(DistanceVM, document.getElementById('selectDistance'));
 //ko.applyBindings(ModeVM, document.getElementById('selectMode'));
 //ko.applyBindings(ModeVM, document.getElementById('visitList'));

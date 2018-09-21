@@ -34,3 +34,4 @@ Then double click the file and the guide will open in your default browser.
 * [Google Maps Documentation - Marker Labels](https://developers.google.com/maps/documentation/javascript/examples/marker-labels)
 * [Google Maps API Key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 * [Asynchronous error handling in JavaScript](https://ruben.verborgh.org/blog/2012/12/31/asynchronous-error-handling-in-javascript/)
+* http://zetcode.com/articles/javascriptjsonurl/
